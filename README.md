@@ -3,7 +3,7 @@ golang 中文分词
 
 hash tire树实现中文分词,实时更新词库,内存占用低,效率优秀
 
-#安装/更新
+# 安装/更新
 ```
 go get github.com/cplusgo/golang-segment
 ```
