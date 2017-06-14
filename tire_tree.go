@@ -48,6 +48,7 @@ func (this *TireTree) insert(word string) {
 		seg := root.AddChild(current)
 		root = seg
 	}
+	root.addFrequency()
 }
 
 func (this *TireTree) getRoot(value int32) *TireNode {
@@ -69,10 +70,11 @@ func (this *TireTree) Search(sentence string) []string {
 	var current int32
 	var root *TireNode = nil
 	var word string = ""
-	for i:=0; i<length; i++ {
+	var mark int = 0
+	for i := 0; i < length; i++ {
 		current = runes[i]
 		if root == nil {
-			word = ""
+			mark = i
 			word += string(current)
 			root = this.root[current]
 		} else {
@@ -80,8 +82,14 @@ func (this *TireTree) Search(sentence string) []string {
 			if node != nil {
 				word += string(current)
 			} else {
-				words = append(words, word)
-				i--
+				if root.frequency > 0 {
+					words = append(words, word)
+					i--
+					word = ""
+				} else {
+					word = string(runes[mark])
+					i = mark
+				}
 			}
 			root = node
 		}
